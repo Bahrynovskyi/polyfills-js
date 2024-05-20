@@ -27,16 +27,12 @@ Array.prototype.forEach2 = function (callback, thisArg) {
         i++;
 
     }
-
-
-
-
 };
 
-arr.forEach2((item, index, array) => {
-    console.log({ item, index });
+// arr.forEach2((item, index, array) => {
+//     console.log({ item, index });
 
-});
+// });
 
 
 // filter Polyfill
@@ -69,8 +65,8 @@ Array.prototype.filter2 = function (callback, thisArg) {
     return res;
 
 };
-const y = arr2.filter2(item => item === 22);
-console.log(y);
+// const y = arr2.filter2(item => item === 22);
+// console.log(y);
 
 
 //  map Polyfill
@@ -82,4 +78,42 @@ console.log(y);
 
 const arr3 = [1, 2, 7, 9, 23, 54, 5, 5, 2, 12, 22, 22];
 
+
+Array.prototype.map2 = function (callback, thisArg) {
+
+    if (this == null) {
+        throw new Error('Can\'t iterate over undefined or null');
+    }
+    let context = this;
+
+    let O = Object(this);
+
+    if (arguments.length > 1) {
+        context = thisArg;
+    }
+    if (typeof callback !== 'function') {
+        throw new Error('Callback is not a function');
+    }
+    let len = O.length;
+    let newArray = [];
+    let i = 0;
+    while (i < len) {
+        let newValue;
+
+        if (i in O) {
+            newArray[i] = callback.call(thisArg, this[i], i, O);
+        }
+        i++;
+    }
+
+    return newArray;
+};
+
+
+// const x = arr3.map2(item => item * 2);
+// console.log(x);
+
+
+
+// Reduce
 
